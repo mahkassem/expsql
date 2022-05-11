@@ -2,13 +2,11 @@ import express, { Application, json } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import routes from './routes';
-
-dotenv.config();
+import config from './config';
 
 const app: Application = express();
-const port = process.env.PORT || 3000;
+const port = config.app.port;
 
 /**
  * ? Middlewares
