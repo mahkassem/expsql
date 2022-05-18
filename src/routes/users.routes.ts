@@ -1,11 +1,10 @@
 import { Router } from "express";
+import { getAllUsersHandler } from "../controllers/users.controller";
 import { authGuard } from "../utils/auth.provider";
 
 const usersRouter = Router();
 
-usersRouter.get("/", authGuard, (req, res) => {
-    res.send("Users list");
-});
+usersRouter.get("/", authGuard, getAllUsersHandler);
 
 usersRouter.get("/:id", authGuard, (req, res) => {
     res.send(`User ${req.params.id}`);
