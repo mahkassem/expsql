@@ -1,5 +1,5 @@
-import DB from '../../utils/database';
-import { User } from './user.model';
+import DB from "../../utils/database";
+import { User } from "./user.model";
 
 /**
  * @description create user
@@ -7,20 +7,25 @@ import { User } from './user.model';
  * @returns Promise<User>
  */
 const createUser = async (user: User): Promise<User> => {
-    const queryTest = `INSERT INTO users (name, color, email, password) VALUES ($1, $2, $3, $4) RETURNING *`;
-    const result = await DB.query(queryTest, [user.name, user.color, user.email, user.password]);
-    return result.rows[0];
-}
+  const queryTest = `INSERT INTO users (name, color, email, password) VALUES ($1, $2, $3, $4) RETURNING *`;
+  const result = await DB.query(queryTest, [
+    user.name,
+    user.color,
+    user.email,
+    user.password,
+  ]);
+  return result.rows[0];
+};
 
 /**
  * @description get all users
  * @returns Promise<User[]>
  */
 const getAllUsers = async (): Promise<User[]> => {
-    const queryTest = `SELECT * FROM users`;
-    const result = await DB.query(queryTest);
-    return result.rows;
-}
+  const queryTest = `SELECT * FROM users`;
+  const result = await DB.query(queryTest);
+  return result.rows;
+};
 
 /**
  * @description get user by id
@@ -28,22 +33,21 @@ const getAllUsers = async (): Promise<User[]> => {
  * @returns Promise<User>
  */
 const getUserById = async (id: number): Promise<User> => {
-    const queryTest = `SELECT * FROM users WHERE id = $1`;
-    const result = await DB.query(queryTest, [id]);
-    return result.rows[0];
-}
-
-/**
- * @description update user method
- * @param id: number 
- * @returns Promise<User>
- */
+  const queryTest = `SELECT * FROM users WHERE id = $1`;
+  const result = await DB.query(queryTest, [id]);
+  return result.rows[0];
+};
 
 /**
  * @description delete user method
  * @param id: number
  * @returns Promise<boolean>
  */
+const deleteUser = async (id: number): Promise<boolean> => {
+  const deleteQuery = `DELETE FROM users WHERE id = $1`;
+  const result = await DB.query(deleteQuery, [id]);
+  return result.rowCount > 0;
+};
 
 /**
  * @description get user by email
@@ -51,9 +55,9 @@ const getUserById = async (id: number): Promise<User> => {
  * @returns Promise<User>
  */
 const getUserByEmail = async (email: string): Promise<User> => {
-    const queryTest = `SELECT * FROM users WHERE email = $1`;
-    const result = await DB.query(queryTest, [email]);
-    return result.rows[0];
-}
+  const queryTest = `SELECT * FROM users WHERE email = $1`;
+  const result = await DB.query(queryTest, [email]);
+  return result.rows[0];
+};
 
-export { createUser, getUserByEmail, getAllUsers, getUserById };
+export { createUser, getUserByEmail, getAllUsers, getUserById, deleteUser };

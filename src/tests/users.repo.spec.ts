@@ -1,7 +1,8 @@
 import {
     createUser,
     getAllUsers,
-    getUserById
+    getUserById,
+    deleteUser
 } from '../entities/users/users.repo'
 import { User } from '../entities/users/user.model'
 
@@ -29,7 +30,9 @@ describe('UsersRepo', () => {
         expect(users.length).toBeGreaterThan(0)
     })
 
-    // test update user
-
     // test delete user
+    it('Should delete user', async () => {
+        const user = await deleteUser(testUser.id as number);
+        expect(user).toBeTruthy();
+    })
 })
