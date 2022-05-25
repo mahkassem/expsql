@@ -7,10 +7,11 @@ import { User } from "./user.model";
  * @returns Promise<User>
  */
 const createUser = async (user: User): Promise<User> => {
-  const queryTest = `INSERT INTO users (name, color, email, password) VALUES ($1, $2, $3, $4) RETURNING *`;
+  const queryTest = `INSERT INTO users (name, color, avatar, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
   const result = await DB.query(queryTest, [
     user.name,
     user.color,
+    user.avatar ?? null,
     user.email,
     user.password,
   ]);
